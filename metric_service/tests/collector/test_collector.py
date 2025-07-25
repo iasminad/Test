@@ -1,12 +1,13 @@
 import pytest
 import json
 from unittest.mock import patch, MagicMock
+import sys
+import os
+from metric_service.server import collector
 
-import collector
 
-
-@patch('collector.requests.post')
-@patch('collector.pika.BlockingConnection')
+@patch('metric_service.server.collector.requests.post')
+@patch('metric_service.server.collector.pika.BlockingConnection')
 def test_consume_messages(mock_pika, mock_post):
     mock_channel = MagicMock()
     mock_connection = MagicMock()

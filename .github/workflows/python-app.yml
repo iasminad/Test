@@ -27,4 +27,5 @@ jobs:
         echo "Installed dependencies"
     - name: Test with pytest
       run: |
+        export PYTHONPATH=/home/runner/work/Get-Metrics/Get-Metrics:$PYTHONPATH
         pytest

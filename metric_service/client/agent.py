@@ -5,6 +5,7 @@ import sys
 from time import sleep
 import threading
 
+
 def send_metrics():
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq')
@@ -12,7 +13,7 @@ def send_metrics():
     channel = connection.channel()
     channel.queue_declare(queue='metrics')
 
-    for _ in range(10):  
+    for _ in range(10):
         metrics = {
             'CPU': psutil.cpu_count(),
             'Virtual Memory': psutil.virtual_memory().total,
@@ -22,7 +23,7 @@ def send_metrics():
         }
         metrics_json = json.dumps(metrics)
 
-        channel.basic_publish(exchange='', routing_key='metrics', 
+        channel.basic_publish(exchange='', routing_key='metrics',
                               body=metrics_json)
         print(" [x] Sent metrics!")
         print(metrics_json)
@@ -32,11 +33,13 @@ def send_metrics():
 
     connection.close()
 
+
 def main():
     sleep(10)  # give RabbitMQ time to start
     sender_thread = threading.Thread(target=send_metrics)
     sender_thread.start()
     sender_thread.join()
+
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,7 @@
 import sqlite3
 import storage
 
+
 def create_db():
     connection = sqlite3.connect("database.db")
     cursor = connection.cursor()
@@ -17,6 +18,7 @@ def create_db():
 
     connection.commit()
     connection.close()
+
 
 create_db()
 storage.call_api()
